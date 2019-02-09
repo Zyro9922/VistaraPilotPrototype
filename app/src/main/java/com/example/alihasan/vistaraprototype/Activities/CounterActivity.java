@@ -2,18 +2,12 @@ package com.example.alihasan.vistaraprototype.Activities;
 
 import com.example.alihasan.vistaraprototype.Singleton.UploadSingleton;
 import com.example.alihasan.vistaraprototype.Util.TimeFormatUtil;
-import android.animation.LayoutTransition;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +28,6 @@ public class CounterActivity extends AppCompatActivity {
 
     private UploadSingleton counter;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +39,6 @@ public class CounterActivity extends AppCompatActivity {
         startButton = findViewById(R.id.btn_start);
         textView = findViewById(R.id.stopwatch_view);
         textView.setTextSize(55);
-
 
     }
 
@@ -105,7 +95,6 @@ public class CounterActivity extends AppCompatActivity {
                         dialogYes();
                     }
                 });
-
 
         builderSingle.show();
     }

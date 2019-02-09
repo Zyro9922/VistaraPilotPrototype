@@ -20,7 +20,6 @@ public class FlightActivity extends AppCompatActivity {
 
     private UploadSingleton counter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +27,6 @@ public class FlightActivity extends AppCompatActivity {
 
         flightNo = findViewById(R.id.flightNoEditText);
         counter = UploadSingleton.getInstance();
-
 
         findViewById(R.id.goButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +54,6 @@ public class FlightActivity extends AppCompatActivity {
                 }
 
                 else Toast.makeText(FlightActivity.this, "YOU'RE OFFLINE", Toast.LENGTH_SHORT).show();
-
 
             }
         });

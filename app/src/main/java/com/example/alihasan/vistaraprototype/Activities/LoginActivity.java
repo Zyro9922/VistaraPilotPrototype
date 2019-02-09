@@ -40,10 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 else Toast.makeText(LoginActivity.this, "YOU'RE OFFLINE", Toast.LENGTH_SHORT).show();
-
-
-
-
+                
             }
         });
 
