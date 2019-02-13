@@ -1,7 +1,7 @@
 package com.example.alihasan.vistaraprototype.Activities;
 
 import com.example.alihasan.vistaraprototype.Singleton.UploadSingleton;
-import com.example.alihasan.vistaraprototype.Util.TimeFormatUtil;
+import com.example.alihasan.vistaraprototype.TimeUtil.TimeFormatUtil;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.alihasan.vistaraprototype.R;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,7 +24,7 @@ public class CounterActivity extends AppCompatActivity {
     private TextView textView;
 
     private Timer timer;
-    private int currentTime = 0;
+    private static int currentTime = 2420000;
     private int mId = 1;
     private boolean isButtonStartPressed = false;
 
@@ -118,4 +120,10 @@ public class CounterActivity extends AppCompatActivity {
     public void onBackPressed() {
         moveTaskToBack(true);
     }
+
+    public static int flightTime(){
+        return currentTime;
+    }
+
+
 }
