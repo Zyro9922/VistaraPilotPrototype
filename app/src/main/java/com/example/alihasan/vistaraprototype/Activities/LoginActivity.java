@@ -11,39 +11,83 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.alihasan.vistaraprototype.R;
+import com.example.alihasan.vistaraprototype.Service.Client;
+import com.example.alihasan.vistaraprototype.Service.ServerURL;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText user,pass;
+    EditText email,pass;
+
+    private static String EMAIL;
+
+    static String SERVER_URL = new ServerURL().getSERVER_URL();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        user = findViewById(R.id.userNameEditText);
+        email = findViewById(R.id.userNameEditText);
         pass = findViewById(R.id.passwordEditText);
 
         findViewById(R.id.loginButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(SERVER_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                Client client = retrofit.create(Client.class);
+
                 if(isNetworkAvailable())
                 {
-                    if(user.getText().toString().equals("PILOT123") && pass.getText().toString().equals("PASS123"))
-                    {
-                        Intent i = new Intent(LoginActivity.this,FlightActivity.class);
-                        startActivity(i);
-                    }
+                    Call<String> call = client.getAuth(email.getText().toString(),pass.getText().toString());
 
-                    else    Toast.makeText(LoginActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+
+                            if(response.body()==null)
+                            {
+                                Toast.makeText(getApplicationContext(), "SERVER IS DOWN", Toast.LENGTH_SHORT).show();
+                            }
+
+                            else if(response.body().equals("Success"))
+                            {
+
+                                Intent i = new Intent(LoginActivity.this,FlightActivity.class);
+                                EMAIL = email.getText().toString();
+                                startActivity(i);
+                            }
+
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(), "INV U/P" + response.body(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                            Toast.makeText(getApplicationContext(), "No Internet/FAILURE", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                 }
 
                 else Toast.makeText(LoginActivity.this, "YOU'RE OFFLINE", Toast.LENGTH_SHORT).show();
-                
+
             }
         });
-
 
     }
 
@@ -52,5 +96,9 @@ public class LoginActivity extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static String getEMAIL(){
+        return EMAIL;
     }
 }
