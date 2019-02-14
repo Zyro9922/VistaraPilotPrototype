@@ -2,6 +2,7 @@ package com.example.alihasan.vistaraprototype.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,14 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.userNameEditText);
         pass = findViewById(R.id.passwordEditText);
 
+        if(getSharedPreferences("LOGINDATA", Context.MODE_PRIVATE).getString("EMAIL", "")!=null &&
+            !getSharedPreferences("LOGINDATA", Context.MODE_PRIVATE).getString("EMAIL", "").equals("")){
+
+            Intent i = new Intent(LoginActivity.this,FlightActivity.class);
+            startActivity(i);
+
+        }
+
         findViewById(R.id.loginButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +72,12 @@ public class LoginActivity extends AppCompatActivity {
 
                             else if(response.body().equals("Success"))
                             {
+
+                                SharedPreferences loginData = getSharedPreferences("LOGINDATA", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = loginData.edit();
+                                editor.putString("EMAIL", email.getText().toString().trim());
+                                editor.putString("PASS",pass.getText().toString().trim());
+                                editor.apply();
 
                                 Intent i = new Intent(LoginActivity.this,FlightActivity.class);
                                 EMAIL = email.getText().toString();

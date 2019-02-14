@@ -107,6 +107,12 @@ public class FlightActivity extends AppCompatActivity {
                                 }
                                 else if(response.body().equals("Success"))
                                 {
+                                    SharedPreferences preferences =getSharedPreferences("data",Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.clear();
+                                    editor.apply();
+                                    finish();
+
                                     Toast.makeText(getApplicationContext(), "SUCCESSFULLY UPLOADED  ", Toast.LENGTH_SHORT).show();
 
                                 }
@@ -160,6 +166,13 @@ public class FlightActivity extends AppCompatActivity {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
             case R.id.logout:
+
+                SharedPreferences preferences =getSharedPreferences("LOGINDATA",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.apply();
+                finish();
+
                 Toast.makeText(FlightActivity.this, "LOGGED OUT SUCCESSFULLY", Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent(FlightActivity.this,LoginActivity.class);
